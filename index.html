@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>Casa Verde · Checklist Diario</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#ef7d22;--green:#159957;--red:#d9363e;--yellow:#c88700;--shadow:0 10px 30px rgba(17,24,39,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.app{max-width:760px;margin:auto;padding:14px 14px 110px}
+header{position:sticky;top:0;z-index:20;background:rgba(244,246,248,.94);backdrop-filter:blur(16px);padding:8px 0 12px}
+.brand{display:flex;justify-content:space-between;align-items:center;gap:12px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;color:var(--accent)}h1{font-size:24px;line-height:1.05;margin:3px 0 0}.datepill{background:var(--ink);color:#fff;border-radius:999px;padding:9px 12px;font-size:12px;font-weight:800;white-space:nowrap}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:15px;margin:10px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin:0 0 5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#fafafa;border-radius:12px;padding:10px 11px;outline:none}.field textarea{min-height:74px;resize:vertical}
+.stats{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:8px;margin:10px 0}.stat{background:var(--ink);color:#fff;border-radius:16px;padding:12px}.stat small{display:block;color:#aeb5c0;font-size:10px;text-transform:uppercase;font-weight:800}.stat strong{display:block;font-size:23px;margin-top:2px}.progress{height:7px;background:#303745;border-radius:99px;overflow:hidden;margin-top:8px}.progress i{display:block;height:100%;width:0;background:var(--accent);transition:.25s}
+.toolbar{display:flex;gap:8px;position:sticky;top:70px;z-index:15;margin:10px 0}.search{flex:1;min-width:0;border:1px solid var(--line);border-radius:14px;padding:11px 13px;background:#fff;box-shadow:var(--shadow)}.filter{border:1px solid var(--line);background:#fff;border-radius:14px;padding:10px 12px;font-weight:800}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 8px}.section-title h2{font-size:14px;margin:0;text-transform:uppercase;letter-spacing:.1em}.section-title span{font-size:11px;color:var(--muted);font-weight:800}
+.dish{background:#fff;border:1px solid var(--line);border-radius:18px;margin:9px 0;overflow:hidden;box-shadow:0 5px 18px rgba(17,24,39,.05)}.dish-head{padding:13px;display:flex;align-items:center;gap:10px}.num{width:34px;height:34px;border-radius:11px;background:#eef1f5;display:grid;place-items:center;font-size:11px;font-weight:900;color:#596273}.dish-main{flex:1;min-width:0}.dish-name{font-size:15px;font-weight:900}.dish-sub{font-size:11px;color:var(--muted);margin-top:2px}.state{display:flex;gap:5px}.state button{border:0;border-radius:10px;padding:7px 8px;font-size:10px;font-weight:900;background:#eef1f5;color:#5b6473}.state .on-ready{background:#dff6e9;color:#08733b}.state .on-pending{background:#fff2cc;color:#8a6100}.state .on-missing{background:#ffe1e3;color:#a91d29}
+.tasks{border-top:1px solid var(--line);padding:4px 12px 9px}.task{display:flex;align-items:flex-start;gap:9px;padding:9px 1px;border-bottom:1px dashed #edf0f3}.task:last-child{border-bottom:0}.task input{appearance:none;width:20px;height:20px;border:2px solid #cbd1da;border-radius:6px;flex:none;margin:0}.task input:checked{background:var(--green);border-color:var(--green);position:relative}.task input:checked:after{content:"✓";color:#fff;font-size:13px;font-weight:900;position:absolute;left:3px;top:-1px}.task span{font-size:13px;line-height:1.25}.task.done span{text-decoration:line-through;color:#9aa1ad}.obs{border-top:1px solid var(--line);padding:10px 12px}.obs input{width:100%;border:0;background:#f8fafb;border-radius:10px;padding:9px 10px;font-size:12px;outline:none}
+.final{background:#111827;color:#fff;border-radius:20px;padding:15px;margin-top:18px}.final h2{font-size:14px;margin:0 0 8px}.final .task{border-color:#303745}.final .task input{border-color:#667080}.final .task span{color:#e8ebef}.final .task.done span{color:#7f8998}
+.actions{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(12px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);backdrop-filter:blur(15px);border-top:1px solid var(--line);display:flex;gap:8px;justify-content:center}.actions button{border:0;border-radius:14px;padding:11px 13px;font-weight:900;font-size:12px}.primary{background:var(--accent);color:#fff}.dark{background:var(--ink);color:#fff}.light{background:#eef1f5;color:var(--ink)}
+.empty{text-align:center;padding:35px 15px;color:var(--muted)}
+@media(max-width:520px){.app{padding-left:10px;padding-right:10px}.grid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1.25fr 1fr 1fr}.stat strong{font-size:19px}.dish-head{align-items:flex-start}.state{flex-direction:column}.state button{min-width:57px}.toolbar{top:67px}}
+@media(min-width:700px){.app{padding-top:18px}.dish{margin-bottom:12px}}
+@media print{body{background:#fff}.app{max-width:none;padding:0}.actions,.toolbar{display:none}header{position:static;background:#fff}.panel,.dish,.final{box-shadow:none;break-inside:avoid}.tasks{display:block}.dish{page-break-inside:avoid}}
+</style>
+
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Casa Verde">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand">
+    <div><div class="eyebrow">CASA VERDE · OPERACIÓN</div><h1>Checklist de Supervisión Diaria</h1></div>
+    <div class="datepill" id="today"></div>
+  </div>
+</header>
+
+<section class="panel">
+  <div class="grid">
+    <div class="field"><label>Fecha</label><input id="date" type="date"></div>
+    <div class="field"><label>Supervisor</label><input id="supervisor" placeholder="Nombre"></div>
+    <div class="field"><label>Turno</label><select id="shift"><option>Almuerzo</option><option>Cena</option></select></div>
+    <div class="field"><label>Inicio producción</label><input id="tStart" type="time"></div>
+    <div class="field"><label>Pre-servicio</label><input id="tPre" type="time"></div>
+    <div class="field"><label>Apertura</label><input id="tOpen" type="time"></div>
+    <div class="field"><label>Cierre</label><input id="tClose" type="time"></div>
+    <div class="field"><label>Incidencias</label><input id="incidents" placeholder="Anotar incidencias"></div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><small>Avance total</small><strong id="pct">0%</strong><div class="progress"><i id="bar"></i></div></div>
+  <div class="stat"><small>Tareas</small><strong id="count">0/0</strong></div>
+  <div class="stat"><small>Platos</small><strong id="dishesDone">0/32</strong></div>
+</div>
+
+<div class="toolbar">
+  <input class="search" id="search" placeholder="Buscar plato o tarea…">
+  <select class="filter" id="filter"><option value="all">Todos</option><option value="open">Pendientes</option><option value="done">Completos</option><option value="missing">Falta</option></select>
+</div>
+
+<div class="section-title"><h2>Hoja 1 · Producción</h2><span>01–16</span></div>
+<div id="list1"></div>
+<div class="section-title"><h2>Hoja 2 · Producción</h2><span>17–32</span></div>
+<div id="list2"></div>
+
+<section class="final">
+  <h2>Supervisión final</h2>
+  <div id="finalChecks"></div>
+  <div class="field" style="margin-top:10px"><label style="color:#aeb5c0">Firma / conformidad</label><input id="signature" placeholder="Nombre del supervisor"></div>
+</section>
+</div>
+
+<div class="actions">
+  <button class="light" onclick="clearDay()">↺ Limpiar</button>
+  <button class="dark" onclick="window.print()">🖨 Imprimir</button>
+  <button class="primary" onclick="exportDay()">⬇ Exportar</button>
+</div>
+
+<script>
+const DATA = {"dishes": [["01", "Arroz con Ossobuco", ["Porcionar y sazonar ossobuco", "Dorar la carne", "Construir fondo de sabor", "Desglasar y añadir fondo", "Brasear lentamente", "Separar, deshuesar y porcionar", "Nacarar arroz", "Añadir fondo y jugo de ossobuco", "Cocinar y reposar arroz", "Mantecar y ajustar", "Preparar tuétano", "Asar tuétano", "Preparar laqueado", "Laquear/regenerar carne"]], ["02", "Arroz de Costilla · Hongos", ["Porcionar y sazonar costilla", "Dorar costilla", "Incorporar aromáticos y fondo", "Cocción lenta de costilla", "Reservar jugos", "Preparar arroz", "Nacarar arroz", "Añadir fondo de res", "Preparar/incorporar hongos", "Cocción controlada del arroz", "Incorporar costilla", "Rectificar y terminar"]], ["03", "Base Jardín de Tubérculos", ["Aplanar hojaldre", "Cortar discos", "Asar discos de hojaldre", "Preparar puré de papa", "Preparar cortes de tubérculos y vegetales", "Preparar remolachas y encurtidos", "Preparar chips/crujientes", "Construir jardín sobre hojaldre"]], ["04", "Callos Fritos · Ensaladilla Verde", ["Limpiar callos", "Cocer callos", "Enfriar y prensar", "Cortar callos", "Preparar cobertura", "Preparar fritura", "Preparar ensaladilla verde", "Porcionar ensaladilla", "Freír callos", "Montar y terminar"]], ["05", "Carbonara", ["Cortar guanciale", "Dorar guanciale y reservar grasa", "Preparar mezcla de huevo, queso y pimienta", "Cocer pasta", "Reservar agua de cocción", "Emulsionar carbonara", "Integrar guanciale", "Terminar con queso y pimienta"]], ["06", "Carpaccio de Tomate", ["Seleccionar y sanitizar tomates", "Laminar tomates", "Preparar emulsión de mozzarella", "Preparar albahaca", "Preparar aceite, pimienta y sal en escama", "Montar tomate", "Distribuir emulsión", "Terminar y servir"]], ["07", "Chuletitas de Cordero · Ratatouille", ["Limpiar y porcionar chuletitas", "Preparar parrilla", "Preparar cortes de vegetales", "Elaborar ratatouille", "Preparar puré de papa", "Grillar chuletitas", "Mantener guarniciones listas", "Montar y terminar"]], ["08", "Chuletón de Cerdo Tomahawk", ["Porcionar y preparar chuletón", "Preparar parrilla", "Preparar Jardín de Tubérculos", "Preparar disco de hojaldre", "Preparar puré de papa", "Preparar cortes de tubérculos", "Preparar chips/crujientes", "Preparar cocota de puré", "Cubrir y gratinar cocota", "Cocinar chuletón", "Montar y terminar"]], ["09", "Corvina · Patatas a lo Pobre", ["Limpiar y porcionar corvina", "Preparar parrilla", "Laminar patatas", "Cortar cebolla", "Preparar patatas a lo pobre", "Grillar corvina", "Mantener patatas listas", "Montar y terminar"]], ["10", "Croquetas · Champiñones", ["Preparar relleno de jamón y champiñones", "Enfriar relleno", "Porcionar y formar croquetas", "Preparar empanizado", "Empanizar croquetas", "Preparar aceite de fritura", "Preparar cuscús", "Preparar aliño y vegetales", "Preparar hierbas y terminaciones", "Freír croquetas", "Montar y servir"]], ["11", "Empanadas Ricota · Espinaca · Pecho", ["Preparar masa", "Preparar relleno ricota–espinaca", "Preparar relleno de pecho ahumado", "Enfriar y porcionar rellenos", "Preparar salsa roja de ají", "Preparar alioli/lactonesa", "Estirar y cortar masa", "Rellenar y cerrar", "Organizar empanadas para fritura", "Freír y escurrir", "Montar con salsas"]], ["12", "Espagueti Pulpo · Arrabbiata", ["Porcionar pulpo cocido", "Preparar salsa arrabbiata", "Preparar ajo y guindilla", "Preparar parmesano y hierbas", "Preparar parrilla", "Marcar pulpo a la parrilla", "Cocer espagueti", "Ligar espagueti con arrabbiata", "Cortar/disponer pulpo", "Montar y terminar"]], ["13", "Aglio Olio · Pollo", ["Porcionar y sazonar pollo", "Preparar acelgas", "Preparar ajo", "Preparar peperoncino", "Preparar crema de mozzarella", "Preparar parrilla", "Grillar pollo", "Grillar acelgas", "Cocer espaguetis", "Ligar aglio olio peperoncino", "Integrar pollo y acelgas", "Montar y terminar"]], ["14", "Amatriciana · Guanciale", ["Cortar y dorar guanciale", "Preparar base con grasa de guanciale", "Preparar salsa de tomate", "Incorporar guindilla", "Cocer espaguetis", "Ligar pasta con salsa", "Integrar parte del guanciale", "Reservar guanciale crujiente", "Incorporar queso", "Rectificar y servir"]], ["15", "Langostinos · Tomillo · Limón", ["Limpiar y porcionar langostinos", "Preparar tomillo", "Preparar limón", "Preparar ajo", "Preparar guindilla", "Preparar aceite de oliva", "Preparar parrilla", "Cocinar langostinos", "Preparar terminación de tomillo y limón", "Montar y servir"]], ["16", "Linguine Cacio e Pepe", ["Preparar pimienta negra", "Preparar agua de cocción", "Cocer linguine", "Preparar mezcla de queso", "Formar base de pimienta", "Emulsionar pasta con queso y agua", "Ajustar textura", "Montar y terminar"]], ["17", "Milhoja Crepe · Dulce de Leche", ["Preparar masa de crepe", "Cocinar crepes", "Seleccionar crepes uniformes", "Preparar relleno de dulce de leche", "Montar capas", "Prensar y estabilizar", "Preparar ganache de chocolate", "Preparar crema inglesa", "Cortar porciones", "Preparar terminaciones", "Montar y servir"]], ["18", "Milhojas Vainilla · Chocolate · Banana", ["Preparar masa de crepe", "Cocinar crepes", "Preparar crema pastelera de banana", "Preparar ganache de chocolate", "Preparar banana deshidratada", "Preparar salsa inglesa de banana", "Preparar tierra de chocolate", "Montar capas", "Prensar y estabilizar", "Cortar porciones", "Montar y terminar"]], ["19", "Ojo de Bife 350 g", ["Porcionar ojo de bife", "Temperar y secar", "Preparar parrilla", "Preparar zanahorias caramelizadas", "Preparar puré de zanahoria", "Preparar puré de papa parmesano", "Cargar cocota", "Gratinar cocota", "Cocinar ojo de bife", "Reposar", "Cortar", "Montar y terminar"]], ["20", "Pato a la Parrilla", ["Porcionar y preparar pato", "Preparar repollo", "Preparar arvejas", "Preparar papas al horno", "Preparar cebollas caramelizadas", "Preparar alioli", "Preparar reducción de pato y vegetales", "Cocción base del pato", "Terminar pato a la parrilla", "Regenerar guarniciones", "Montar y terminar"]], ["21", "Ragú a la Boloñesa", ["Preparar base del ragú", "Cocción prolongada del ragú", "Reducir y ligar ragú", "Rectificar y conservar", "Preparar pasta porcionada", "Preparar crema de queso", "Preparar parmesano", "Preparar hierbas", "Regenerar ragú", "Cocer pasta", "Ligar pasta y ragú", "Montar y terminar"]], ["22", "Suprema Pollo · Cuscús · Legumbres", ["Porcionar supremas", "Preparar parrilla", "Preparar cuscús", "Preparar legumbres", "Integrar ensalada de cuscús y legumbres", "Preparar puré de zanahoria", "Grillar suprema", "Cortar suprema", "Regenerar guarniciones", "Montar y terminar"]], ["23", "Tilapia Plancha · Salsa Griega", ["Limpiar y porcionar tilapia", "Preparar plancha", "Preparar espárragos", "Preparar vegetales verdes", "Preparar hojas y hierbas", "Preparar salsa griega de yogur", "Porcionar salsa en jarritas", "Preparar puré de papa", "Cocinar tilapia", "Montar plato", "Terminar salsa en mesa"]], ["24", "César Romana a la Parrilla", ["Preparar aderezo César", "Preparar pollo", "Preparar crotones", "Preparar pan gratinado", "Preparar romana", "Grillar pollo", "Grillar romana", "Montar y terminar"]], ["25", "Chuletón de Res", ["Preparar chuletón", "Asar a fuego lento", "Terminar a la parrilla", "Preparar reducción de cebolla", "Preparar cebolla a la parrilla", "Preparar papas gratinadas", "Preparar ensalada", "Montar plato", "Finalizar y servir"]], ["26", "Cortesía Casa Verde", ["Laminar papas", "Preparar papas sufladas", "Suflar papas", "Preparar base", "Elaborar relleno", "Preparar crema", "Preparar brotes", "Montar base", "Colocar cubierta", "Decorar", "Porcionar para servicio"]], ["27", "Cuoretos Mediterráneos", ["Limpiar y sazonar corazones", "Preparar manteca aromática", "Confitado a baja temperatura", "Retirar y enfriar", "Separar gelatina de la grasa", "Conservar corazones", "Preparar mantequilla de escargot", "Porcionar mantequilla", "Regenerar corazones", "Montar y gratinar", "Finalizar"]], ["28", "Pan Tumaca", ["Preparar tomate rallado", "Preparar lactonesa blanca", "Preparar lactonesa amarilla", "Grillar pan", "Frotar ajo", "Incorporar tomate", "Preparar aceite y pimienta", "Decorar con lactonesas", "Finalizar y servir"]], ["29", "Pulpo a la Gallega", ["Cocer pulpo", "Enfriar y porcionar pulpo", "Preparar papas Dauphinoise", "Formar cilindros", "Gratinar Dauphinoise", "Preparar mousse de pimentón", "Preparar alioli lactonesa", "Preparar aros de cebolla", "Freír aros", "Regenerar y acabar pulpo", "Montar y terminar"]], ["30", "Tataki de Trucha", ["Limpiar y porcionar trucha", "Preparar cuscús", "Preparar vegetales y ensalada", "Tostar almendras", "Preparar crema/helado de almendra", "Preparar aceite de hierbas", "Preparar parmesano y brotes", "Sellar trucha", "Enfriar y cortar tataki", "Montar ensalada", "Montar tataki y terminación"]], ["31", "Tilapia Curada", ["Verificar pescado y trazabilidad", "Preparar mezcla de curado", "Curar tilapia", "Laminar pescado", "Preparar salsa cítrica", "Preparar crema de yogur", "Preparar tapenade de berenjena", "Laminar cebolla", "Preparar microvegetales y flores", "Montar plato", "Finalizar"]], ["32", "Tiramisú Verde", ["Preparar crema pastelera de palta", "Preparar base crujiente", "Preparar pistacho crujiente", "Preparar base de helado", "Turbinar helado de palta", "Preparar tierra de chocolate", "Montar capas", "Porcionar helado", "Montar y terminar"]]], "finalChecks": ["Mise en place completa", "Porciones listas", "Salsas/cremas listas", "Guarniciones listas", "Parrilla/plancha/fritura listas", "Frío organizado", "Decoraciones listas", "Pase despejado"]};
+const KEY = "casa_verde_checklist_v1";
+let state = load();
+
+function todayISO(){ const d=new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10); }
+function blank(){ return {date:todayISO(), supervisor:"", shift:"Almuerzo", tStart:"",tPre:"",tOpen:"",tClose:"",incidents:"",signature:"",tasks:{}, dishState:{}, obs:{}, final:{}}}
+function load(){ try{return {...blank(),...JSON.parse(localStorage.getItem(KEY)||"{}")}}catch(e){return blank()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state)); renderStats()}
+function taskId(di,ti){return di+"_"+ti}
+function setField(id){ const el=document.getElementById(id); state[id]=el.value; save(); }
+function escape(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+function render(){
+  document.getElementById("today").textContent = new Date(state.date+"T12:00:00").toLocaleDateString("es-BO",{day:"2-digit",month:"short"}).replace(".","");
+  ["date","supervisor","shift","tStart","tPre","tOpen","tClose","incidents","signature"].forEach(id=>{const e=document.getElementById(id); if(e)e.value=state[id]||""});
+  renderList("list1",DATA.dishes.slice(0,16));
+  renderList("list2",DATA.dishes.slice(16));
+  renderFinal();
+  renderStats();
+}
+function renderList(target, dishes){
+ const box=document.getElementById(target); box.innerHTML="";
+ dishes.forEach((d,local)=>{
+   const di=DATA.dishes.indexOf(d);
+   const status=state.dishState[di]||"pending";
+   const q=(document.getElementById("search").value||"").toLowerCase();
+   const f=document.getElementById("filter").value;
+   const doneCount=d[2].filter((_,ti)=>state.tasks[taskId(di,ti)]).length;
+   const isComplete=doneCount===d[2].length;
+   const hasMissing=status==="missing";
+   if(q && !(d[1].toLowerCase().includes(q)||d[2].some(x=>x.toLowerCase().includes(q)))) return;
+   if(f==="done" && !isComplete) return;
+   if(f==="open" && isComplete) return;
+   if(f==="missing" && !hasMissing) return;
+   const el=document.createElement("article"); el.className="dish";
+   el.innerHTML=`<div class="dish-head">
+     <div class="num">${d[0]}</div><div class="dish-main"><div class="dish-name">${escape(d[1])}</div><div class="dish-sub">${doneCount}/${d[2].length} tareas</div></div>
+     <div class="state">
+       <button class="${status==='ready'?'on-ready':''}" onclick="setDish(${di},'ready')">LISTO</button>
+       <button class="${status==='pending'?'on-pending':''}" onclick="setDish(${di},'pending')">PEND.</button>
+       <button class="${status==='missing'?'on-missing':''}" onclick="setDish(${di},'missing')">FALTA</button>
+     </div></div>
+     <div class="tasks">${d[2].map((t,ti)=>`<label class="task ${state.tasks[taskId(di,ti)]?'done':''}">
+       <input type="checkbox" ${state.tasks[taskId(di,ti)]?'checked':''} onchange="toggleTask(${di},${ti},this.checked)"><span>${escape(t)}</span></label>`).join("")}</div>
+     <div class="obs"><input placeholder="Observación del plato…" value="${escape(state.obs[di]||"")}" onchange="setObs(${di},this.value)"></div>`;
+   box.appendChild(el);
+ });
+}
+function renderFinal(){
+ const box=document.getElementById("finalChecks"); box.innerHTML=DATA.finalChecks.map((x,i)=>`<label class="task ${state.final[i]?'done':''}">
+ <input type="checkbox" ${state.final[i]?'checked':''} onchange="toggleFinal(${i},this.checked)"><span>${escape(x)}</span></label>`).join("");
+}
+function renderStats(){
+ let total=0,done=0,dishes=0;
+ DATA.dishes.forEach((d,di)=>{d[2].forEach((_,ti)=>{total++;if(state.tasks[taskId(di,ti)])done++}); if(d[2].every((_,ti)=>state.tasks[taskId(di,ti)]))dishes++});
+ const p=total?Math.round(done/total*100):0;
+ document.getElementById("pct").textContent=p+"%"; document.getElementById("bar").style.width=p+"%";
+ document.getElementById("count").textContent=done+"/"+total; document.getElementById("dishesDone").textContent=dishes+"/32";
+}
+function setDish(di,s){state.dishState[di]=s;save();render()}
+function toggleTask(di,ti,v){state.tasks[taskId(di,ti)]=v;save();render()}
+function toggleFinal(i,v){state.final[i]=v;save();renderFinal()}
+function setObs(di,v){state.obs[di]=v;save()}
+function bind(){
+ ["date","supervisor","shift","tStart","tPre","tOpen","tClose","incidents","signature"].forEach(id=>document.getElementById(id).addEventListener("change",()=>setField(id)));
+ document.getElementById("search").addEventListener("input",render);
+ document.getElementById("filter").addEventListener("change",render);
+}
+function clearDay(){if(confirm("¿Borrar el checklist de hoy y empezar de cero?")){state=blank();save();render()}}
+function exportDay(){
+ const payload={...state,generatedAt:new Date().toISOString()};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="Casa-Verde_Checklist_"+state.date+".json";a.click();URL.revokeObjectURL(a.href);
+}
+bind(); render();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js"));
+}
+</script>
+
+</body>
+</html>

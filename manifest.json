@@ -1,0 +1,15 @@
+{
+  "name": "Casa Verde · Checklist Diario",
+  "short_name": "Casa Verde",
+  "description": "Checklist diario de supervisión y producción de Casa Verde.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "lang": "es",
+  "icons": [
+    {"src":"icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
